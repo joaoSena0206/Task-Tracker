@@ -1,11 +1,11 @@
 import json
 
 
-def getLastId():
+def pegarUltimoId():
     tasks = open("tasks.json")
     id = 0
 
-    # Gets biggest id from the tasks
+    # Pega o maior id das tasks
     try:
         tasksDict = json.load(tasks)
         id = tasksDict[len(tasksDict) - 1]["id"] + 1
@@ -16,23 +16,23 @@ def getLastId():
 
     return id
 
-def createTask(description, status, createdAt, updatedAt):
+def criarTask(description, status, createdAt, updatedAt):
     tasks = open("tasks.json")
     fileRead = tasks.read()
     tasksList = []
     task = {
-            "id": getLastId(),
+            "id": pegarUltimoId(),
             "description": description,
             "status": status,
             "createdAt": createdAt,
             "updatedAt": updatedAt
         }
 
-    # Checks if any task exists to prevent error
+    # Checa se existe alguma task para prevenir erro
     if len(fileRead) != 0:
         tasksList = json.loads(fileRead)
 
-    # Adds task to JSON
+    # Adiciona a task ao arquivo json
     tasks = open("tasks.json", "w")
 
     tasksList.append(task)
@@ -41,4 +41,4 @@ def createTask(description, status, createdAt, updatedAt):
     tasks.close()
 
 
-createTask("Teste", "done", "2024-12-25", "2024-12-25")
+criarTask("Teste", "done", "2024-12-25", "2024-12-25")
